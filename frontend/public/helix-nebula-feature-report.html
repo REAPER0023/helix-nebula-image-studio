@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Helix Nebula — Feature & Technology Report</title>
+<style>
+:root{color-scheme:dark;--bg:#090e14;--panel:#111a22;--line:#263641;--mint:#8de6c8;--text:#e9f0f5;--muted:#a3b0bb}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#16302c 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.6 'Segoe UI',Arial,sans-serif}.wrap{max-width:1080px;margin:0 auto;padding:40px 24px 64px}.tag{color:var(--mint);letter-spacing:.15em;font-size:11px;font-weight:700}h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:12px 0}h2{font-size:21px;margin:34px 0 12px;color:#d8f5ea}.lead,.note{color:var(--muted)}.card{background:linear-gradient(145deg,#111a22,#0e151c);border:1px solid var(--line);border-radius:12px;padding:22px;margin-top:24px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--mint);font-size:11px;letter-spacing:.05em;text-transform:uppercase}th,td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}td:first-child{font-weight:650;color:#e5f4ee;min-width:155px}code{color:#a6edda;background:#14221f;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.tech div{padding:13px 15px;border:1px solid var(--line);border-radius:9px;background:#0d141b}.tech strong{display:block;color:var(--mint);margin-bottom:4px}.limits li{margin:8px 0;color:var(--muted)}.footer{font-size:12px;color:#81909d;margin-top:28px}@media(max-width:700px){.wrap{padding:26px 14px}.card{padding:14px;overflow-x:auto}table{min-width:760px}td:first-child{min-width:145px}}@media print{body{background:#fff;color:#162129}.card,.tech div{background:#fff;border-color:#cbd5da}th{color:#146950}td:first-child,h2{color:#17382f}.lead,.note,.limits li,.footer{color:#47545d}code{background:#edf3f2;color:#146950}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="tag">HELIX NEBULA · IMAGE STUDIO</div>
+<h1>Feature &amp; Technology Report</h1>
+<p class="lead">What each feature does, how it works, and why it is included.</p>
+<section class="card"><h2>Features</h2><table><thead><tr><th>Feature</th><th>What it does</th><th>How it works</th><th>Why it helps</th></tr></thead><tbody>
+<tr><td>Image upload and preview</td><td>Accepts JPG, PNG, or WEBP up to 15 MB.</td><td>React validates and previews; FastAPI validates again.</td><td>Confirms the chosen image and rejects unsupported files.</td></tr>
+<tr><td>Image summary and Q&amp;A</td><td>Describes a scene and answers an optional question.</td><td>FastAPI sends the image and prompt to an OpenRouter vision model.</td><td>Provides a quick summary and targeted answers.</td></tr>
+<tr><td>AI-origin clues</td><td>Gives a cautious estimate of possible AI generation.</td><td>The model is asked to cite visible clues and uncertainty.</td><td>Provides context without claiming to prove provenance.</td></tr>
+<tr><td>Free-model fallback</td><td>Tries four image-capable free routes in order.</td><td>Backend filters out non-free model IDs and retries busy or incomplete routes.</td><td>Keeps requests on free routes and handles provider outages.</td></tr>
+<tr><td>Copy or download analysis</td><td>Copies the result or saves it as a text report.</td><td>Uses the browser Clipboard API and a generated text file.</td><td>Makes results easy to keep or share.</td></tr>
+<tr><td>3D reconstruction</td><td>Creates a point cloud or mesh from 5–30 overlapping product photos.</td><td>FastAPI runs the local COLMAP photogrammetry engine.</td><td>Combines multiple views into an inspectable model.</td></tr>
+<tr><td>360° viewer</td><td>Rotates and zooms the model.</td><td>A custom Canvas viewer projects model points and rotates on drag.</td><td>Allows inspection from different angles in the browser.</td></tr>
+<tr><td>Dimension calibration</td><td>Estimates length, width, and height in centimeters.</td><td>Select two points and enter their known real-world distance.</td><td>Scales the model; results are approximate.</td></tr>
+<tr><td>PLY download</td><td>Exports a reconstructed model.</td><td>The backend returns the generated PLY file.</td><td>Lets users continue in a 3D editor.</td></tr>
+<tr><td>Sample 3D demo</td><td>Shows a ceramic mug in the viewer.</td><td>The browser generates synthetic geometry.</td><td>Demonstrates viewer controls without a reconstruction.</td></tr>
+<tr><td>Status and file checks</td><td>Shows API, AI, and COLMAP readiness.</td><td>The UI polls status endpoints; backend validates uploads.</td><td>Surfaces setup problems and invalid inputs.</td></tr>
+</tbody></table></section>
+<section class="card"><h2>Technology used</h2><div class="tech">
+<div><strong>Frontend</strong>React, Vite, CSS, and Lucide React icons.</div>
+<div><strong>Backend</strong>Python FastAPI for analysis, uploads, status, and downloads.</div>
+<div><strong>Vision AI</strong>OpenRouter chat completions with image input and four free fallback routes.</div>
+<div><strong>3D processing</strong>COLMAP photogrammetry, with local image/model storage.</div>
+<div><strong>3D display</strong>Custom browser Canvas viewer for rotation, zoom, and point selection.</div>
+</div></section>
+<section class="card limits"><h2>Important limits</h2><ul>
+<li>AI-origin output is an estimate from visual appearance, not proof.</li>
+<li>Photos alone do not establish real-world scale. Calibration needs a known distance between two selected points.</li>
+<li>The sample mug model is synthetic, not reconstructed from an uploaded photo.</li>
+<li>Image analysis sends the image to OpenRouter; the API key stays on the backend.</li>
+<li>Free model providers may be rate-limited; the app tries another configured free route.</li>
+</ul></section>
+<p class="footer">Helix Nebula · Local image intelligence and multi-view reconstruction workspace</p>
+</main></body></html>
